@@ -25,7 +25,7 @@ char* load_bar(double percent, int barLength){
 
 		//I added the .99999999 precision because I couldn't be bothered. 
 		//I don't know if there's a better solution
-		if(percent >= total) str[1+n] = '#';
+		if(percent >= total || percent > 0.99999) str[1+n] = '#';
 		else str[1+n] = ' ';
 		total += step;
 	}
@@ -33,30 +33,21 @@ char* load_bar(double percent, int barLength){
 
 	return str;
 }
-char* wait_circle(int frame){
+char* wait_circle(int frame, int frameTotal){
 	char* str = malloc(2);
 
 	str[1] = '\0';
+	frameTotal/=2;
+	frame %= frameTotal;
+	double step = (double)frameTotal/4;
 
-	switch(frame%4){
-		case 0:
-		str[0] = '|';
-		break;
-		case 1:
-		str[0] = '/';
-		break;
-		case 2:
-		str[0] = '-';
-		break;
-		case 3:
-		str[0] = '\\';
-		break;
-		default:
-		break;
-	}
-
+	if(frame < step) str[0] = '|';
+	else if(frame < step+step) str[0] = '/';
+	else if(frame < step+step+step) str[0] = '-';
+	else str[0] = '\\';
+	
 	return str;
 }
-char* wait_dots(int frame, int dotNum);
-char* wait_bar(int frame, int totalBarLength, int subBarLength);
-char* wait_bar_bounce(int frame, int totalBarLength, int subBarLength);
+char* wait_dots(int frame, int frameTotal, int dotNum);
+char* wait_bar(int frame, int frameTotal, int totalBarLength, int subBarLength);
+char* wait_bar_bounce(int frame, int frameTotal, int totalBarLength, int subBarLength);
