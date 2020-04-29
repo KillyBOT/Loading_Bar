@@ -5,11 +5,14 @@
 int main(){
 	double d = 0;
 	double dd = 0.1;
-	for(d = 0; d <= 1; d+=dd){
+	int f = 0;
+	for(d = 0; d < 1; d+=dd){
 		clearScreen();
-		printf("Real value of d:%f\n", d);
-		printf("%s\n", load_plain(d,4));
-		printf("%s\n", load_bar(d,12));
-		sleep(1);
+		//printf("Real value of d:%f %d\n", d, (int)(d*100000));
+		printf("%s\n", load_plain(d,0));
+		printf("%s\n", load_bar(d,15));
+		printf("%s\n", wait_circle(f));
+		f++;
+		usleep(100000);
 	}
 }
